@@ -128,6 +128,7 @@ namespace AFDT
             this.input_alfabeto_entrada.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.input_alfabeto_entrada.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.input_alfabeto_entrada.Location = new System.Drawing.Point(8, 95);
+            this.input_alfabeto_entrada.Margin = new System.Windows.Forms.Padding(158, 3, 3, 3);
             this.input_alfabeto_entrada.Name = "input_alfabeto_entrada";
             this.input_alfabeto_entrada.Size = new System.Drawing.Size(190, 21);
             this.input_alfabeto_entrada.TabIndex = 1;
@@ -315,6 +316,7 @@ namespace AFDT
             this.input_alfabeto_salida.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.input_alfabeto_salida.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.input_alfabeto_salida.Location = new System.Drawing.Point(8, 185);
+            this.input_alfabeto_salida.Margin = new System.Windows.Forms.Padding(158, 3, 3, 3);
             this.input_alfabeto_salida.Name = "input_alfabeto_salida";
             this.input_alfabeto_salida.Size = new System.Drawing.Size(190, 21);
             this.input_alfabeto_salida.TabIndex = 2;

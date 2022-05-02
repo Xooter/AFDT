@@ -1,5 +1,13 @@
 # FYI
->El programa no esta terminado aun, tengo que subir la update de minimizacion y arreglar un poco mas la UI.
+## Last Implementation
+- Minimizacion individual
+## Por agregar:
+[] Update UI
+[x] Minimizacion individual
+[] Minimizacion por grupos
+[] Implementar otros tipos de automatas
+[] copy paste de tablas
+[] conversiones de automatas
 
 ## Builds
 >Para el que no tenga ganas de compilarlo, en build/ esta el instalador del programa.

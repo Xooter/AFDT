@@ -13,7 +13,14 @@ namespace AFDT
         public List<string[]> lista_funcion = new List<string[]>();
         string[] rowList = new string[0];
         public bool allDone = false;
+
+        //
+        public Estado estados_validos = new Estado();
+        public List<List<string>> conjuntos_cocientes = new List<List<string>>();
+        public List<List<string>> conjuntos_final = new List<List<string>>();
         
+
+
         //generar matriz de las funciones
         //luego se usa para resolver y traducir
         public void GenerarFuncion(TableLayoutPanel tl) {
@@ -46,7 +53,7 @@ namespace AFDT
             tableFunciones.Controls.Clear();
             tableFunciones.RowCount = form.estados.lista_estados.Count;
             tableFunciones.ColumnCount = form.alfabeto_entrada.lista_alf.Count + 2;
-           
+
             // GENERAR TABLAS e.e
             for (int i = 0; i < form.estados.lista_estados.Count; i++)
             {
@@ -86,7 +93,7 @@ namespace AFDT
                 //DISPLAY: slots en blanco
                 for (int j = 0; j < form.alfabeto_entrada.lista_alf.Count; j++)
                 {
-                    
+
                     if (i == 0)
                     {
                         TextBox txt_box_alf = new TextBox();
@@ -126,13 +133,13 @@ namespace AFDT
             return fullListString;
         }
 
-        
-        public string ResolverFuncion(List<string> lista_estados, string current_estado,List<string> lista_alfabeto, string current_simbolo) {
+
+        public string ResolverFuncion(List<string> lista_estados, string current_estado, List<string> lista_alfabeto, string current_simbolo) {
             for (int i = 0; i < lista_estados.Count; i++)
             {
                 if (lista_estados[i] == current_estado)
                 {
-                    for (int j = 0; j < lista_alfabeto.Count;j++)
+                    for (int j = 0; j < lista_alfabeto.Count; j++)
                     {
                         if (lista_alfabeto[j] == current_simbolo)
                             return lista_funcion[i].OfType<string>().ToList()[j];
@@ -141,5 +148,105 @@ namespace AFDT
             }
             return null;
         }
+
+        public void GetConvexos(List<string> lista_alf, Estado estados)
+        {
+            int[] count = new int[estados.lista_estados.Count];
+            string next_state = estados.inicial;
+            int index = estados.lista_estados.IndexOf(next_state);
+
+            estados_validos = new Estado();
+            estados_validos.inicial = estados.inicial;
+            estados_validos.lista_estados_aceptacion = estados.lista_estados_aceptacion;
+            conjuntos_cocientes.Clear();
+            conjuntos_cocientes.Add(new List<string>() { estados.inicial });
+            conjuntos_cocientes.Add(new List<string>());
+
+            for (int i = 0; i < estados.lista_estados.Count; i++)
+            {
+                for (int j = 0; j < lista_alf.Count; j++)
+                {
+
+                    if (!estados_validos.lista_estados.Contains(next_state))
+                    {
+                        estados_validos.lista_estados.Add(next_state);
+                        
+                    }
+                    if (!estados_validos.lista_estados_aceptacion.Contains(next_state) && !conjuntos_cocientes[0].Contains(next_state))
+                        conjuntos_cocientes[0].Add(next_state);
+                    if (estados_validos.lista_estados_aceptacion.Contains(next_state) && !conjuntos_cocientes[1].Contains(next_state))
+                        conjuntos_cocientes[1].Add(next_state);
+
+
+                    next_state = lista_funcion[index].OfType<string>().ToList()[count[index]];
+
+                    if (count[index] < lista_alf.Count - 1)
+                        count[index] += 1;
+                    
+                    index = estados.lista_estados.IndexOf(next_state);
+
+                }
+            }
+         
+        }//end
+        
+        public void ComprobarEquivalencia(Estado estados) {
+            List<string> temp_list = new List<string>();
+            conjuntos_final.Add(new List<string>() { estados.inicial });
+            for (int i = 0; i < conjuntos_cocientes.Count; i++)
+            {
+                if (conjuntos_cocientes[i].OfType<string>().ToList().Count < 2)
+                {
+                    conjuntos_final.Add(new List<string>() { conjuntos_cocientes[i].OfType<string>().ToList()[0] });
+                }
+                else
+                {
+                    for (int j = 0; j < conjuntos_cocientes[i].OfType<string>().ToList().Count - 1; j++)
+                    {
+                        string estado_conjunto_cociente = conjuntos_cocientes[i].OfType<string>().ToList()[j];
+                        int index = estados.lista_estados.IndexOf(estado_conjunto_cociente);
+
+                        temp_list.Add(estado_conjunto_cociente);
+
+                        string estado_conjunto_cociente_b = conjuntos_cocientes[i].OfType<string>().ToList()[j + 1];
+                        int index_b = estados.lista_estados.IndexOf(estado_conjunto_cociente_b);
+
+                        if (lista_funcion[index].OfType<string>().ToList().SequenceEqual(lista_funcion[index_b].OfType<string>().ToList()))
+                        {
+                            temp_list.Add(estado_conjunto_cociente_b);
+                        }
+                        else
+                        {
+                            bool agregar = true;
+                            for (int m = 0; m < conjuntos_final.Count; m++)
+                            {
+                                string estado_conjunto_cociente_c = conjuntos_final[m][0];
+                                int index_c = estados.lista_estados.IndexOf(estado_conjunto_cociente_c);
+                                if (lista_funcion[index_c].OfType<string>().ToList().SequenceEqual(lista_funcion[index_b].OfType<string>().ToList()) &&
+                                     index_c != index_b)
+                                {
+                                    conjuntos_final[m].Add(estado_conjunto_cociente_b);
+                                    temp_list = new List<string>();
+                                    agregar = false;
+                                }
+                                else
+                                {
+                                    agregar = true;
+                                }
+                            }
+                            if (agregar)
+                            {
+                                conjuntos_final.Add(new List<string>() { estado_conjunto_cociente_b });
+                                temp_list = new List<string>();
+                            }
+                        }
+                    }
+                }
+                if(temp_list.Count != 0)
+                    conjuntos_final.Add(temp_list);
+                temp_list = new List<string>();
+            }
+            
+        }//end
     }
 }

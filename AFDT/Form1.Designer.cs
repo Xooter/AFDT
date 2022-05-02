@@ -62,6 +62,10 @@ namespace AFDT
             this.btn_minimizar = new System.Windows.Forms.Button();
             this.tableMinimizacion = new System.Windows.Forms.TableLayoutPanel();
             this.btn_crear_tabla = new System.Windows.Forms.Button();
+            this.input_min_estados = new System.Windows.Forms.TextBox();
+            this.input_min_alf = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.abs = new System.Windows.Forms.TextBox();
             this.tabPage1.SuspendLayout();
             this.tabContarol1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -456,6 +460,10 @@ namespace AFDT
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.abs);
+            this.tabPage3.Controls.Add(this.textBox12);
+            this.tabPage3.Controls.Add(this.input_min_alf);
+            this.tabPage3.Controls.Add(this.input_min_estados);
             this.tabPage3.Controls.Add(this.btn_borrar_tablas);
             this.tabPage3.Controls.Add(this.btn_minimizar);
             this.tabPage3.Controls.Add(this.tableMinimizacion);
@@ -471,7 +479,7 @@ namespace AFDT
             // btn_borrar_tablas
             // 
             this.btn_borrar_tablas.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_borrar_tablas.Location = new System.Drawing.Point(448, 7);
+            this.btn_borrar_tablas.Location = new System.Drawing.Point(448, 17);
             this.btn_borrar_tablas.Name = "btn_borrar_tablas";
             this.btn_borrar_tablas.Size = new System.Drawing.Size(78, 29);
             this.btn_borrar_tablas.TabIndex = 103;
@@ -482,12 +490,13 @@ namespace AFDT
             // btn_minimizar
             // 
             this.btn_minimizar.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_minimizar.Location = new System.Drawing.Point(532, 7);
+            this.btn_minimizar.Location = new System.Drawing.Point(532, 17);
             this.btn_minimizar.Name = "btn_minimizar";
             this.btn_minimizar.Size = new System.Drawing.Size(93, 29);
             this.btn_minimizar.TabIndex = 102;
             this.btn_minimizar.Text = "Minimizar";
             this.btn_minimizar.UseVisualStyleBackColor = true;
+            this.btn_minimizar.Click += new System.EventHandler(this.btn_minimizar_Click);
             // 
             // tableMinimizacion
             // 
@@ -495,24 +504,72 @@ namespace AFDT
             this.tableMinimizacion.ColumnCount = 2;
             this.tableMinimizacion.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableMinimizacion.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableMinimizacion.Location = new System.Drawing.Point(9, 42);
+            this.tableMinimizacion.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tableMinimizacion.Location = new System.Drawing.Point(9, 52);
             this.tableMinimizacion.Name = "tableMinimizacion";
             this.tableMinimizacion.RowCount = 2;
             this.tableMinimizacion.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMinimizacion.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMinimizacion.Size = new System.Drawing.Size(616, 456);
+            this.tableMinimizacion.Size = new System.Drawing.Size(616, 446);
             this.tableMinimizacion.TabIndex = 101;
             // 
             // btn_crear_tabla
             // 
             this.btn_crear_tabla.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_crear_tabla.Location = new System.Drawing.Point(8, 6);
+            this.btn_crear_tabla.Location = new System.Drawing.Point(9, 17);
             this.btn_crear_tabla.Name = "btn_crear_tabla";
             this.btn_crear_tabla.Size = new System.Drawing.Size(78, 29);
             this.btn_crear_tabla.TabIndex = 100;
             this.btn_crear_tabla.Text = "Nueva";
             this.btn_crear_tabla.UseVisualStyleBackColor = true;
             this.btn_crear_tabla.Click += new System.EventHandler(this.btn_crear_tabla_Click);
+            // 
+            // input_min_estados
+            // 
+            this.input_min_estados.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.input_min_estados.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.input_min_estados.Location = new System.Drawing.Point(109, 25);
+            this.input_min_estados.Margin = new System.Windows.Forms.Padding(158, 3, 3, 3);
+            this.input_min_estados.Name = "input_min_estados";
+            this.input_min_estados.Size = new System.Drawing.Size(148, 21);
+            this.input_min_estados.TabIndex = 104;
+            this.input_min_estados.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.input_min_estados_KeyPress);
+            // 
+            // input_min_alf
+            // 
+            this.input_min_alf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.input_min_alf.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.input_min_alf.Location = new System.Drawing.Point(276, 25);
+            this.input_min_alf.Margin = new System.Windows.Forms.Padding(158, 3, 3, 3);
+            this.input_min_alf.Name = "input_min_alf";
+            this.input_min_alf.Size = new System.Drawing.Size(148, 21);
+            this.input_min_alf.TabIndex = 105;
+            // 
+            // textBox12
+            // 
+            this.textBox12.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox12.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox12.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox12.Location = new System.Drawing.Point(109, 6);
+            this.textBox12.Margin = new System.Windows.Forms.Padding(10);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.ReadOnly = true;
+            this.textBox12.Size = new System.Drawing.Size(148, 16);
+            this.textBox12.TabIndex = 110;
+            this.textBox12.Text = "Cantidad de Estados";
+            // 
+            // abs
+            // 
+            this.abs.BackColor = System.Drawing.SystemColors.Window;
+            this.abs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.abs.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.abs.Location = new System.Drawing.Point(276, 6);
+            this.abs.Margin = new System.Windows.Forms.Padding(10);
+            this.abs.Name = "abs";
+            this.abs.ReadOnly = true;
+            this.abs.Size = new System.Drawing.Size(148, 16);
+            this.abs.TabIndex = 111;
+            this.abs.Text = "Longitud de alfabeto";
             // 
             // Form1
             // 
@@ -532,6 +589,7 @@ namespace AFDT
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -570,6 +628,10 @@ namespace AFDT
         private System.Windows.Forms.Button btn_crear_tabla;
         private System.Windows.Forms.Button btn_borrar_tablas;
         private System.Windows.Forms.Button btn_minimizar;
+        private System.Windows.Forms.TextBox abs;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox input_min_alf;
+        private System.Windows.Forms.TextBox input_min_estados;
     }
 }
 

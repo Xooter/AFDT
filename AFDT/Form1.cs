@@ -297,7 +297,9 @@ namespace AFDT
         //minimizacion
         private void btn_crear_tabla_Click(object sender, EventArgs e)
         {
-            lista_tablas.Add(new Tabla(tableMinimizacion, 2, 4));
+            lista_tablas.Add(new Tabla(tableMinimizacion,
+                input_min_alf.Text != "" ? Int32.Parse(input_min_alf.Text) : 2,
+                input_min_estados.Text != "" ? Int32.Parse(input_min_estados.Text) : 5));
         }
 
         
@@ -309,8 +311,41 @@ namespace AFDT
                 tableMinimizacion.Controls.Remove(tl.tabla);
             }
             lista_tablas.Clear();
+            btn_minimizar.ForeColor = Color.Black;
         }
 
+       
+
+        private void btn_minimizar_Click(object sender, EventArgs e)
+        {
+            string fullListString = string.Empty;
+
+            foreach (Tabla tabla in lista_tablas)
+            {
+                if (tabla.estado.inicial != "" )
+                {
+                    tabla.funcion.GenerarFuncion(tabla.tabla);
+                    if (tabla.funcion.allDone)
+                    {
+                        tabla.funcion.GetConvexos(tabla.list_alf, tabla.estado);
+                        btn_minimizar.ForeColor = Color.Green;
+                        tabla.PintarEstadosValidos();
+                        tabla.funcion.ComprobarEquivalencia(tabla.estado);
+                        tabla.PintarEstadosValidos();
+                    }
+                    else
+                        btn_minimizar.ForeColor = Color.Red;
+                }
+                else
+                    btn_minimizar.ForeColor = Color.Red;
+            }
+        }
+        
+
+        private void input_min_estados_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !Char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back;
+        }
         #endregion
     }
 
